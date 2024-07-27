@@ -1,0 +1,392 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>VS/SMS - A very simple and functional bulk SMS app</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --background-light: #f5f5f5;
+            --primary-white: #ffffff;
+            --primary-dark: #333333;
+            --secondary-gray: #666666;
+            --accent-color: #4a90e2;
+            --border-color: #e0e0e0;
+            --success-color: #4caf50;
+            --text-light: #ffffff;
+            --border-radius: 8px;
+        }
+        
+        body, html {
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            color: var(--primary-dark);
+            background-color: var(--background-light);
+        }
+        
+        .container {
+            width: 90%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        header {
+            background-color: var(--primary-white);
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            padding: 15px 0;
+        }
+        
+        .logo {
+            display: inline-block;
+        }
+        
+        .logo-image {
+            height: 50px;
+            width: auto;
+        }
+        
+        nav {
+            float: right;
+        }
+        
+        nav a {
+            color: var(--primary-dark);
+            text-decoration: none;
+            padding: 10px 15px;
+            font-weight: bold;
+        }
+        
+        .hero {
+            background-color: var(--primary-white);
+            padding: 60px 0;
+            text-align: center;
+        }
+        .hero-subtitle {
+            font-size: 1.2rem;
+            max-width: 600px;
+            margin: 0 auto 30px;
+        }
+        h1, h2, h3 {
+            color: var(--primary-dark);
+        }
+        
+        h1 {
+            font-size: 36px;
+            margin-bottom: 20px;
+        }
+        
+        .cta-button {
+            display: inline-block;
+            background-color: var(--success-color);
+            color: var(--text-light);
+            padding: 12px 24px;
+            text-decoration: none;
+            border-radius: var(--border-radius);
+            font-weight: bold;
+            margin-top: 20px;
+            transition: background-color 0.3s ease, transform 0.3s ease;
+        }
+        
+        .cta-button:hover {
+            background-color: #45a049;
+            transform: translateY(-2px);
+        }
+        
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 30px;
+            margin-top: 40px;
+        }
+        
+        .feature-item {
+            background-color: var(--primary-white);
+            border-radius: var(--border-radius);
+            padding: 30px;
+            text-align: center;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        
+        .feature-item:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 6px 12px rgba(0,0,0,0.15);
+        }
+        
+        .feature-icon {
+            width: 64px;
+            height: 64px;
+            margin-bottom: 20px;
+            color: var(--accent-color);
+        }
+        
+        .feature-item h3 {
+            font-size: 1.5rem;
+            margin-bottom: 10px;
+            color: var(--primary-dark);
+        }
+        
+        .feature-item p {
+            font-size: 1rem;
+            color: var(--secondary-gray);
+        }
+        
+        #features h2 {
+            text-align: center;
+            font-size: 2.5rem;
+            margin-bottom: 30px;
+            color: var(--primary-dark);
+        }
+        
+        .feature-item i {
+            font-size: 48px;
+            color: var(--accent-color);
+            margin-bottom: 15px;
+        }
+        
+        .screenshot {
+            margin-top: 40px;
+            text-align: center;
+        }
+        
+        .screenshot img {
+            max-width: 100%;
+            border-radius: var(--border-radius);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        }
+        
+        .pricing-container {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 40px;
+        }
+        
+        .pricing-box {
+            background-color: var(--primary-white);
+            color: var(--primary-dark);
+            border-radius: var(--border-radius);
+            padding: 40px;
+            text-align: center;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            flex: 1;
+            margin: 0 15px;
+            position: relative;
+            overflow: visible;
+            z-index: 1;
+            transition: box-shadow 0.3s ease;
+        }
+        
+        
+        .glow-border {
+            position: absolute;
+            top: -2px;
+            left: -2px;
+            right: -2px;
+            bottom: -2px;
+            border-radius: calc(var(--border-radius) + 2px);
+            pointer-events: none;
+            transition: box-shadow 0.3s ease;
+        }
+        
+        .pricing-box:hover .glow-border {
+            box-shadow: 0 0 15px rgba(74, 144, 226, 0.5);
+        }
+        
+        .price {
+            font-size: 48px;
+            font-weight: bold;
+            color: var(--accent-color);
+            margin: 20px 0;
+        }
+        
+        .price span {
+            font-size: 18px;
+            color: var(--secondary-gray);
+        }
+        
+        .feature-list {
+            list-style-type: none;
+            padding: 0;
+            margin: 20px 0;
+            text-align: left;
+        }
+        
+        .feature-list li {
+            margin: 10px 0;
+            color: var(--secondary-gray);
+        }
+        
+        .feature-list li::before {
+            content: "\2022";
+            color: var(--accent-color);
+            font-weight: bold;
+            display: inline-block;
+            width: 1em;
+            margin-left: -1em;
+        }
+        
+        .pricing-note {
+            text-align: center;
+            font-style: italic;
+            color: var(--secondary-gray);
+            margin-top: 20px;
+            font-size: 0.9rem;
+        }
+        
+        footer {
+            background-color: var(--primary-white);
+            color: var(--secondary-gray);
+            text-align: center;
+            padding: 20px 0;
+            margin-top: 40px;
+            border-top: 1px solid var(--border-color);
+        }
+        
+        @media (max-width: 768px) {
+            .features-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .pricing-container {
+                flex-direction: column;
+            }
+            
+            .pricing-box {
+                margin: 15px 0;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <a href="#" class="logo">
+                <img src="images/VSSMS-logo.png" alt="VS/SMS - A very simple and functional bulk SMS app" class="logo-image">
+            </a>
+            <nav>
+                <a href="#features">Features</a>
+                <a href="#pricing">Pricing</a>
+                <a href="http://badasssmsapp.web.app/">Login</a>
+            </nav>
+        </div>
+    </header>
+    
+    <section class="hero">
+        <div class="container">
+            <h1>A very simple and functional bulk SMS app</h1>
+            <p class="hero-subtitle">Cut through the complexity. Reach more leads, close more deals, and grow your business with powerful SMS marketing.</p>
+            <a href="#pricing" class="cta-button">Start Growing Your Business Today</a>
+        </div>
+    </section>
+    
+    <section id="features" class="container">
+        <h2>Features</h2>
+        <div class="features-grid">
+            <div class="feature-item">
+                <i class="fas fa-comment-dots"></i>
+                <h3>Bulk Messaging</h3>
+                <p>Send up to 50,000 messages per month</p>
+            </div>
+            <div class="feature-item">
+                <i class="fas fa-chart-line"></i>
+                <h3>Analytics Dashboard</h3>
+                <p>Track campaign performance with ease</p>
+            </div>
+            <div class="feature-item">
+                <i class="fas fa-file-alt"></i>
+                <h3>Customizable Templates</h3>
+                <p>Create unlimited message templates</p>
+            </div>
+            <div class="feature-item">
+                <i class="fas fa-cogs"></i>
+                <h3>CRM Integration</h3>
+                <p>Connect via outbound webhooks</p>
+            </div>
+            <div class="feature-item">
+                <i class="fas fa-headset"></i>
+                <h3>Customer Support</h3>
+                <p>Get help when you need it</p>
+            </div>
+            <div class="feature-item">
+                <i class="fas fa-users"></i>
+                <h3>Multi-User Access</h3>
+                <p>Collaborate with your team</p>
+            </div>
+        </div>
+    </section>
+    
+    <section id="pricing" class="container">
+        <h2>Simple Pricing for Powerful SMS Marketing</h2>
+        <div class="pricing-container">
+            <div class="pricing-box">
+                <div class="glow-border"></div>
+                <h3>Starter Plan</h3>
+                <p class="price">$329<span>/month</span></p>
+                <ul class="feature-list">
+                    <li>10,000 messages per month</li>
+                    <li>Basic analytics dashboard</li>
+                    <li>Unlimited templates</li>
+                    <li>CRM integration via webhooks</li>
+                    <li>Email support</li>
+                </ul>
+                <a href="#" class="cta-button">Get Started Now</a>
+            </div>
+            <div class="pricing-box">
+                <div class="glow-border"></div>
+                <h3>Growth Plan</h3>
+                <p class="price">$849<span>/month</span></p>
+                <ul class="feature-list">
+                    <li>25,000 messages per month</li>
+                    <li>Enhanced reporting</li>
+                    <li>Multi-user access</li>
+                    <li>Priority email support</li>
+                    <li>All Starter Plan features</li>
+                </ul>
+                <a href="#" class="cta-button">Amplify Your Reach</a>
+            </div>
+            <div class="pricing-box">
+                <div class="glow-border"></div>
+                <h3>Professional Plan</h3>
+                <p class="price">$1,699<span>/month</span></p>
+                <ul class="feature-list">
+                    <li>50,000 messages per month</li>
+                    <li>Custom API access</li>
+                    <li>Dedicated account manager</li>
+                    <li>Phone and email priority support</li>
+                    <li>All Growth Plan features</li>
+                </ul>
+                <a href="#" class="cta-button">Maximize Your Growth</a>
+            </div>
+        </div>
+        <p class="pricing-note">Choose the plan that fits your business needs. No long-term contracts - cancel anytime.</p>
+    </section>
+    
+    <footer>
+        <div class="container">
+            <p>&copy; 2024 VS/SMS. All rights reserved.</p>
+        </div>
+    </footer>
+    
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const pricingBoxes = document.querySelectorAll('.pricing-box');
+            
+            pricingBoxes.forEach(box => {
+                const glowBorder = box.querySelector('.glow-border');
+                
+                box.addEventListener('mouseenter', () => {
+                    glowBorder.style.boxShadow = '0 0 15px rgba(74, 144, 226, 0.5)';
+                });
+                
+                box.addEventListener('mouseleave', () => {
+                    glowBorder.style.boxShadow = 'none';
+                });
+            });
+        });
+    </script>
+</body>
+</html>
