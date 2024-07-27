@@ -5,263 +5,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>VS/SMS - A very simple and functional bulk SMS app</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <style>
-        :root {
-            --background-light: #f5f5f5;
-            --primary-white: #ffffff;
-            --primary-dark: #333333;
-            --secondary-gray: #666666;
-            --accent-color: #4a90e2;
-            --border-color: #e0e0e0;
-            --success-color: #4caf50;
-            --text-light: #ffffff;
-            --border-radius: 8px;
-        }
-        
-        body, html {
-            margin: 0;
-            padding: 0;
-            font-family: Arial, sans-serif;
-            line-height: 1.6;
-            color: var(--primary-dark);
-            background-color: var(--background-light);
-        }
-        
-        .container {
-            width: 90%;
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 20px;
-        }
-        
-        header {
-            background-color: var(--primary-white);
-            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-            padding: 15px 0;
-        }
-        
-        .logo {
-            display: inline-block;
-        }
-        
-        .logo-image {
-            height: 50px;
-            width: auto;
-        }
-        
-        nav {
-            float: right;
-        }
-        
-        nav a {
-            color: var(--primary-dark);
-            text-decoration: none;
-            padding: 10px 15px;
-            font-weight: bold;
-        }
-        
-        .hero {
-            background-color: var(--primary-white);
-            padding: 60px 0;
-            text-align: center;
-        }
-        .hero-subtitle {
-            font-size: 1.2rem;
-            max-width: 600px;
-            margin: 0 auto 30px;
-        }
-        h1, h2, h3 {
-            color: var(--primary-dark);
-        }
-        
-        h1 {
-            font-size: 36px;
-            margin-bottom: 20px;
-        }
-        
-        .cta-button {
-            display: inline-block;
-            background-color: var(--success-color);
-            color: var(--text-light);
-            padding: 12px 24px;
-            text-decoration: none;
-            border-radius: var(--border-radius);
-            font-weight: bold;
-            margin-top: 20px;
-            transition: background-color 0.3s ease, transform 0.3s ease;
-        }
-        
-        .cta-button:hover {
-            background-color: #45a049;
-            transform: translateY(-2px);
-        }
-        
-        .features-grid {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 30px;
-            margin-top: 40px;
-        }
-        
-        .feature-item {
-            background-color: var(--primary-white);
-            border-radius: var(--border-radius);
-            padding: 30px;
-            text-align: center;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
-        }
-        
-        .feature-item:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 6px 12px rgba(0,0,0,0.15);
-        }
-        
-        .feature-icon {
-            width: 64px;
-            height: 64px;
-            margin-bottom: 20px;
-            color: var(--accent-color);
-        }
-        
-        .feature-item h3 {
-            font-size: 1.5rem;
-            margin-bottom: 10px;
-            color: var(--primary-dark);
-        }
-        
-        .feature-item p {
-            font-size: 1rem;
-            color: var(--secondary-gray);
-        }
-        
-        #features h2 {
-            text-align: center;
-            font-size: 2.5rem;
-            margin-bottom: 30px;
-            color: var(--primary-dark);
-        }
-        
-        .feature-item i {
-            font-size: 48px;
-            color: var(--accent-color);
-            margin-bottom: 15px;
-        }
-        
-        .screenshot {
-            margin-top: 40px;
-            text-align: center;
-        }
-        
-        .screenshot img {
-            max-width: 100%;
-            border-radius: var(--border-radius);
-            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
-        }
-        
-        .pricing-container {
-            display: flex;
-            justify-content: space-between;
-            margin-top: 40px;
-        }
-        
-        .pricing-box {
-            background-color: var(--primary-white);
-            color: var(--primary-dark);
-            border-radius: var(--border-radius);
-            padding: 40px;
-            text-align: center;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-            flex: 1;
-            margin: 0 15px;
-            position: relative;
-            overflow: visible;
-            z-index: 1;
-            transition: box-shadow 0.3s ease;
-        }
-        
-        
-        .glow-border {
-            position: absolute;
-            top: -2px;
-            left: -2px;
-            right: -2px;
-            bottom: -2px;
-            border-radius: calc(var(--border-radius) + 2px);
-            pointer-events: none;
-            transition: box-shadow 0.3s ease;
-        }
-        
-        .pricing-box:hover .glow-border {
-            box-shadow: 0 0 15px rgba(74, 144, 226, 0.5);
-        }
-        
-        .price {
-            font-size: 48px;
-            font-weight: bold;
-            color: var(--accent-color);
-            margin: 20px 0;
-        }
-        
-        .price span {
-            font-size: 18px;
-            color: var(--secondary-gray);
-        }
-        
-        .feature-list {
-            list-style-type: none;
-            padding: 0;
-            margin: 20px 0;
-            text-align: left;
-        }
-        
-        .feature-list li {
-            margin: 10px 0;
-            color: var(--secondary-gray);
-        }
-        
-        .feature-list li::before {
-            content: "\2022";
-            color: var(--accent-color);
-            font-weight: bold;
-            display: inline-block;
-            width: 1em;
-            margin-left: -1em;
-        }
-        
-        .pricing-note {
-            text-align: center;
-            font-style: italic;
-            color: var(--secondary-gray);
-            margin-top: 20px;
-            font-size: 0.9rem;
-        }
-        
-        footer {
-            background-color: var(--primary-white);
-            color: var(--secondary-gray);
-            text-align: center;
-            padding: 20px 0;
-            margin-top: 40px;
-            border-top: 1px solid var(--border-color);
-        }
-        
-        @media (max-width: 768px) {
-            .features-grid {
-                grid-template-columns: 1fr;
-            }
-            
-            .pricing-container {
-                flex-direction: column;
-            }
-            
-            .pricing-box {
-                margin: 15px 0;
-            }
-        }
-    </style>
+    <link rel="stylesheet" href="styles.css">
 </head>
 <body>
+    <script src="https://chat-api.spartez-software.com/chat-widget.js" defer></script>
+    <chat-widget jira-id="bf33e40a-bdab-3357-ab00-11ffc55de048" service-desk-id="1"></chat-widget>
+
     <header>
         <div class="container">
             <a href="#" class="logo">
@@ -333,7 +82,7 @@
                     <li>CRM integration via webhooks</li>
                     <li>Email support</li>
                 </ul>
-                <a href="#" class="cta-button">Get Started Now</a>
+                <a href="https://buy.stripe.com/4gw9AT8kigQR8YE14c" target="_blank" class="cta-button">Get Started Now</a>
             </div>
             <div class="pricing-box">
                 <div class="glow-border"></div>
@@ -346,7 +95,7 @@
                     <li>Priority email support</li>
                     <li>All Starter Plan features</li>
                 </ul>
-                <a href="#" class="cta-button">Amplify Your Reach</a>
+                <a href="https://buy.stripe.com/14k00jcAydEF0s8eV1" target="_blank" class="cta-button">Amplify Your Reach</a>
             </div>
             <div class="pricing-box">
                 <div class="glow-border"></div>
@@ -359,10 +108,101 @@
                     <li>Phone and email priority support</li>
                     <li>All Growth Plan features</li>
                 </ul>
-                <a href="#" class="cta-button">Maximize Your Growth</a>
+                <a href="https://buy.stripe.com/28o5kDbwu0RT0s86ou" target="_blank" class="cta-button">Maximize Your Growth</a>
             </div>
         </div>
         <p class="pricing-note">Choose the plan that fits your business needs. No long-term contracts - cancel anytime.</p>
+    </section>
+    
+    <section id="comparison" class="container">
+        <h2>VS/SMS Feature Comparison</h2>
+        <table>
+            <tr>
+                <th>Feature</th>
+                <th>Starter Plan<br>$329/month</th>
+                <th>Growth Plan<br>$849/month</th>
+                <th>Professional Plan<br>$1,699/month</th>
+            </tr>
+            <tr>
+                <td>Messages per month</td>
+                <td>10,000</td>
+                <td>25,000</td>
+                <td class="highlight">50,000</td>
+            </tr>
+            <tr>
+                <td>Analytics dashboard</td>
+                <td>Basic</td>
+                <td>Enhanced</td>
+                <td class="highlight">Advanced</td>
+            </tr>
+            <tr>
+                <td>Templates</td>
+                <td>Unlimited</td>
+                <td>Unlimited</td>
+                <td>Unlimited</td>
+            </tr>
+            <tr>
+                <td>CRM integration via webhooks</td>
+                <td class="check">✓</td>
+                <td class="check">✓</td>
+                <td class="check">✓</td>
+            </tr>
+            <tr>
+                <td>Email support</td>
+                <td class="check">✓</td>
+                <td class="check">Priority</td>
+                <td class="check">Priority</td>
+            </tr>
+            <tr>
+                <td>Multi-user access</td>
+                <td class="x">✕</td>
+                <td class="check">✓</td>
+                <td class="check">✓</td>
+            </tr>
+            <tr>
+                <td>Custom API access</td>
+                <td class="x">✕</td>
+                <td class="x">✕</td>
+                <td class="check">✓</td>
+            </tr>
+            <tr>
+                <td>Dedicated account manager</td>
+                <td class="x">✕</td>
+                <td class="x">✕</td>
+                <td class="check">✓</td>
+            </tr>
+            <tr>
+                <td>Phone support</td>
+                <td class="x">✕</td>
+                <td class="x">✕</td>
+                <td class="check">✓</td>
+            </tr>
+            <tr>
+                <td>Advanced automation features</td>
+                <td class="x">✕</td>
+                <td class="x">✕</td>
+                <td class="check">✓</td>
+            </tr>
+            <tr>
+                <td>A/B testing for messages</td>
+                <td class="x">✕</td>
+                <td class="x">✕</td>
+                <td class="check">✓</td>
+            </tr>
+            <tr>
+                <td>White-labeling options</td>
+                <td class="x">✕</td>
+                <td class="x">✕</td>
+                <td class="check">✓</td>
+            </tr>
+            <tr>
+                <td>Quarterly strategy review</td>
+                <td class="x">✕</td>
+                <td class="x">✕</td>
+                <td class="check">✓</td>
+            </tr>
+        </table>
+        <p class="pricing-note">We use Stripe for secure payments</p>
     </section>
     
     <footer>
@@ -388,5 +228,7 @@
             });
         });
     </script>
+
+    <script src="scripts.js"></script>
 </body>
 </html>
